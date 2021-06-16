@@ -1,0 +1,30 @@
+{
+  "name": "consoleinputrc",
+  "version": "0.0.1",
+  "description": "console input field",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Soldy/consoleinputrc.git"
+  },
+  "keywords": [],
+  "author": "Soldy <npmjs@gidigi.com> (http://gidigi.com)",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Soldy/consoleinputrc/issues"
+  },
+  "homepage": "https://github.com/Soldy/consoleinputrc#readme",
+  "devDependencies": {
+    "nanoTest": "^0.9.9-beta21"
+  },
+  "dependencies": {
+    "clonerc": "0.0.1",
+    "consoleboxrc": "0.0.1",
+    "consolestdiorc": "0.0.4-r2",
+    "consolewatchrc": "0.0.1",
+    "theuniverse": "^0.2.1"
+  }
+}
