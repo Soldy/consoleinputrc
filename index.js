@@ -10,7 +10,7 @@ const inputBase = function(){
         return $box.setup();
     }
     this.set = function(name, value){
-        $box.set(set,value);
+        $box.set(name,value);
     }
     this.move = function(){
         $box.clean();
