@@ -23,7 +23,7 @@ const inputBase = function(){
     let _buffer = '';
     let _position = 0;
     const _render = function(){
-         $box.clear();
+         $box.clean();
          $box.add(_buffer);
     }
     const _event = function(character){
@@ -33,7 +33,7 @@ const inputBase = function(){
             _position = _buffer.length;
         if(_position === _buffer.length){
             _buffer = (_buffer+character);
-            return render();
+            return _render();
         }
         let arr = _buffer.split('');
         if(_insert)
@@ -41,9 +41,8 @@ const inputBase = function(){
         else
             arr.splice(_position, 1, character);
         _buffer = arr.join('');
-        return render();
+        return _render();
     }
-    $box.rc.set();
     $watch.add(
         [
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-',
@@ -60,4 +59,4 @@ const inputBase = function(){
 }
 
 
-exports.base = confrcBase;
+exports.base = inputBase;
