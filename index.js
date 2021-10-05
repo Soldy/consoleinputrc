@@ -13,26 +13,28 @@ const inputBase = function(){
         $box.set(name,value);
     }
     this.move = function(){
-        $box.clean();
+        $box.clear();
         $box.move();
         $box.print();
     }
     let _x = 0;
     let _y = 0;
-    let _insert = false;
+    let _insert = true;
     let _buffer = '';
-    let _position = 0;
+    let _position = 1;
     const _render = function(){
-         $box.clean();
+         console.log(_buffer);
+         $box.clear();
          $box.add(_buffer);
     }
     const _event = function(character){
-        if(_position > _buffer.length)
+        if(0 > _position)
             _position = 0;
         if(_position > _buffer.length)
             _position = _buffer.length;
         if(_position === _buffer.length){
             _buffer = (_buffer+character);
+           _position++;
             return _render();
         }
         let arr = _buffer.split('');
@@ -40,6 +42,8 @@ const inputBase = function(){
             arr.splice(_position, 0, character);
         else
             arr.splice(_position, 1, character);
+        _position++;
+
         _buffer = arr.join('');
         return _render();
     }
