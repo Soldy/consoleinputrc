@@ -1,3 +1,4 @@
+'use strict';
 require('theuniverse');
 const $universe = global.theUn1v3rse.controls.interface();
 const $stdio = $universe.req('sdio','consolestdiorc', 'base');
@@ -5,11 +6,39 @@ const $watch = $universe.req('watch', 'consolewatchrc', 'base');
 const $box = new (require('consoleboxrc')).base();
 
 
-const inputBase = function(){
-    this.setup = function(){
-        return $box.setup();
+const $setup = new (require('setuprc')).base({
+    'x' : {
+        'type'    : 'integer',
+        'min'     : 40,
+        'default' : 40
+    },
+    'y' : {
+        'type'    : 'integer',
+        'min'     : 40,
+        'default' : 40
+    },
+    'insert' : {
+        'type'    : 'boolean',
+        'default' : false
+    },
+    'render' : {
+        'type'    : 'boolean',
+        'default' : false
+    },
+    'history' : {
+        'type'    : 'boolean',
+        'default' : false
+    },
+
+});
+
+const inputBase = function(setup_){
+    this.setup = function(setup){
+        $setup.setup(setup);
+        return $box.setup(setup);
     }
     this.set = function(name, value){
+        $setup.set(name,value);
         $box.set(name,value);
     }
     this.move = function(){
@@ -17,8 +46,6 @@ const inputBase = function(){
         $box.move();
         $box.print();
     }
-    let _x = 0;
-    let _y = 0;
     let _insert = true;
     let _buffer = '';
     let _position = 1;
@@ -47,6 +74,7 @@ const inputBase = function(){
         _buffer = arr.join('');
         return _render();
     }
+    
     $watch.add(
         [
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-',
