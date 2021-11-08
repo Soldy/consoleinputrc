@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "clonerc": "0.0.1",
+    "confrc": "^1.0.4",
     "consoleboxrc": "0.0.1",
     "consolestdiorc": "0.0.4-r2",
     "consolewatchrc": "0.0.1",

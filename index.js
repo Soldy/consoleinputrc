@@ -6,33 +6,9 @@ const $watch = $universe.req('watch', 'consolewatchrc', 'base');
 const $box = new (require('consoleboxrc')).base();
 
 
-const $setup = new (require('setuprc')).base({
-    'x' : {
-        'type'    : 'integer',
-        'min'     : 40,
-        'default' : 40
-    },
-    'y' : {
-        'type'    : 'integer',
-        'min'     : 40,
-        'default' : 40
-    },
-    'insert' : {
-        'type'    : 'boolean',
-        'default' : false
-    },
-    'render' : {
-        'type'    : 'boolean',
-        'default' : false
-    },
-    'history' : {
-        'type'    : 'boolean',
-        'default' : false
-    },
+const $setup = new (require('setuprc')).base;
 
-});
-
-const inputBase = function(setup_){
+const inputBase = function(setup_in){
     this.setup = function(setup){
         $setup.setup(setup);
         return $box.setup(setup);
@@ -49,21 +25,57 @@ const inputBase = function(setup_){
     let _insert = true;
     let _buffer = '';
     let _position = 1;
+    const _setup = new $setup({
+        'left' : {
+            'type'    : 'integer',
+            'min'     : 40,
+            'default' : 40
+        },
+        'top' : {
+            'type'    : 'integer',
+            'min'     : 40,
+            'default' : 40
+        },
+        'columns':{
+            'type'    : 'integer',
+            'min'     : 1,
+            'default' : 25
+        },
+        'rows':{
+            'type'    : 'integer',
+            'min'     : 1,
+            'default' : 7
+        },
+        'insert' : {
+            'type'    : 'boolean',
+            'default' : false
+        },
+        'render' : {
+            'type'    : 'boolean',
+            'default' : false
+        },
+        'history' : {
+            'type'    : 'boolean',
+            'default' : false
+        }
+    });
+
     const _render = function(){
-         console.log(_buffer);
          $box.clear();
          $box.add(_buffer);
     }
     const _event = function(character){
         if(0 > _position)
             _position = 0;
-        if(_position > _buffer.length)
+        else if(_position > _buffer.length)
             _position = _buffer.length;
+            
         if(_position === _buffer.length){
             _buffer = (_buffer+character);
            _position++;
             return _render();
         }
+
         let arr = _buffer.split('');
         if(_insert)
             arr.splice(_position, 0, character);
@@ -74,7 +86,6 @@ const inputBase = function(setup_){
         _buffer = arr.join('');
         return _render();
     }
-    
     $watch.add(
         [
             '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-',
@@ -88,6 +99,9 @@ const inputBase = function(setup_){
         _event
     );
     $watch.watch();
+    _setup.setup(
+        setup_in
+    );
 }
 
 
